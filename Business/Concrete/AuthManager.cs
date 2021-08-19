@@ -22,7 +22,10 @@ namespace Business.Entities.Concrete
         }
         public IDataResult<AccessToken> CreateAccessToken(Kullanici kullanici)
         {
-            throw new NotImplementedException();
+            var claims = _kullaniciService.GetRols(kullanici);
+
+            _tokenHelper.CreateToken(kullanici, claims);
+            return new DataResult<AccessToken>(new AccessToken (), true, "Giris Basarili ");
         }
 
         public IDataResult<Kullanici> Giris(KullaniciGirisDto kullaniciGirisDto)
@@ -41,7 +44,22 @@ namespace Business.Entities.Concrete
 
         public IDataResult<Kullanici> Kaydol(KaydolDto kaydolDto, string sifre)
         {
-            throw new NotImplementedException();
+            byte[] passwordHash;
+            byte[] passwordSalt;
+            HashingHelper.CreatePasswordHash(sifre, out passwordHash,out passwordSalt);
+            var kullanici = new Kullanici
+            {
+                Ad = kaydolDto.Ad,
+                Soyad = kaydolDto.Soyad,
+                KullaniciAdi = kaydolDto.KullaniciAdi,
+                PasswordHash = passwordHash.ToString(),
+                PasswordSalt = passwordSalt.ToString(),
+                Durum=true
+
+
+            };
+            _kullaniciService.Add(kullanici);
+            return new DataResult<Kullanici>(new Kullanici { }, false, "Kayit Basarili ");
         }
 
         public IResult KullaniciKontrol(string kullaniciAdi)

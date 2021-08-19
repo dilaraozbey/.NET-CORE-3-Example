@@ -16,5 +16,6 @@ namespace Business.Abstract
         public void Delete(Kullanici kullanici);
         public void Update(Kullanici kullanici);
         public Kullanici GetByUserName(string username);
+        object GetList();
     }
 }
