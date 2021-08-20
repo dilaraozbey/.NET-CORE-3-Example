@@ -17,8 +17,18 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new UygulamaContext())
             {
-                
-                var result = from r in context.Roller join k in context.KullaniciRoller on r.Id equals k.KullaniciId where k.KullaniciId == kullanici.Id select new Rol { Id = r.Id, RolAdi = r.RolAdi };
+
+                var result = from r in context.Rol
+                             join k in context.Kullanici_Rol
+                             on r.Id equals k.RolId
+                             where k.KullaniciId == kullanici.Id
+                             select new Rol
+                             {
+                                 Id = r.Id,
+                                 RolAdi = r.RolAdi
+                             };
+
+
                 return result.ToList();
             }
         } 

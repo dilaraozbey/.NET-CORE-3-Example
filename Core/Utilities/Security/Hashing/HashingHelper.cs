@@ -26,7 +26,7 @@ namespace Core.Utilities.Security.Hashing
                 {
                     if (computedHash[i] != passwordHash[i])
                     {
-                        return false;
+                        return true;
                     }
                    
                 }
@@ -34,9 +34,6 @@ namespace Core.Utilities.Security.Hashing
             return false;
         }
 
-        public static bool VerifyPasswordHash(string sifre, string passwordHash, string passwordSalt)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

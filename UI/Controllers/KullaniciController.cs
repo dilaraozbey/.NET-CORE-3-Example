@@ -12,10 +12,10 @@ namespace UI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class KullanicilarController : ControllerBase
+    public class KullaniciController : ControllerBase
     {
         private IKullaniciService _kullaniciService;
-        public KullanicilarController(IKullaniciService kullaniciService)
+        public KullaniciController(IKullaniciService kullaniciService)
         {
             _kullaniciService = kullaniciService;
 
@@ -24,51 +24,51 @@ namespace UI.Controllers
         public IActionResult GetList()
         {
             var Result = _kullaniciService.GetList();
-            if (Result != null)
+            if (Result.Success)
             {
-                return Ok(Result);
+                return Ok(Result.Data);
             }
-            return BadRequest("hata");
+            return BadRequest(Result.Message);
         }
         [HttpGet(template: "Getbyid")]
         public IActionResult GetById(int id)
         {
             var Result = _kullaniciService.GetById(id);
-            if (Result!=null)
+            if (Result.Success)
             {
-                return Ok(Result);
+                return Ok(Result.Data);
             }
-            return BadRequest("hata");
+            return BadRequest(Result.Message);
         }
         [HttpPost(template: "add")]
         public IActionResult Add(Kullanici kullanici)
         {
             var Result = _kullaniciService.Add(kullanici);
-            if (Result != null)
+            if (Result.Success)
             {
-                return Ok(Result);
+                return Ok(Result.Message);
             }
-            return BadRequest("hata");
+            return BadRequest(Result.Message);
         }
         [HttpPost(template: "delete")]
         public IActionResult Delete(Kullanici kullanici)
         {
             var Result = _kullaniciService.Delete(kullanici);
-            if (Result != null)
+            if (Result.Success)
             {
-                return Ok(Result);
+                return Ok(Result.Message);
             }
-            return BadRequest("hata");
+            return BadRequest(Result.Message);
         }
         [HttpPost(template: "update")]
         public IActionResult Update(Kullanici kullanici)
         {
             var Result = _kullaniciService.Update(kullanici);
-            if (Result != null)
+            if (Result.Success)
             {
-                return Ok(Result);
+                return Ok(Result.Message);
             }
-            return BadRequest("hata");
+            return BadRequest(Result.Message);
         }
     }
 }

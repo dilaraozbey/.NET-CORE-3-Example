@@ -25,21 +25,22 @@ namespace Business.Concrete
             var claims = _kullaniciService.GetRols(kullanici);
 
             _tokenHelper.CreateToken(kullanici, claims);
-            return new DataResult<AccessToken>(new AccessToken (), true, "Giris Basarili ");
+            return new SuccesDataResult<AccessToken>( "Giris Basarili ");
         }
 
         public IDataResult<Kullanici> Giris(KullaniciGirisDto kullaniciGirisDto)
         {
             var KullaniciDenetim = _kullaniciService.GetByUserName(kullaniciGirisDto.KullaniciAdi);
-            if (KullaniciDenetim == null)
+            if (KullaniciDenetim.Data == null)
             {
-                return new DataResult<Kullanici>(new Kullanici { }, false, "Kullanici yok");
+                
+                return new ErrorDataResult<Kullanici>( "Kullanici yok");
             }
-            if(!HashingHelper.VerifyPasswordHash(kullaniciGirisDto.Sifre,KullaniciDenetim.PasswordHash,KullaniciDenetim.PasswordSalt))
+            if(!HashingHelper.VerifyPasswordHash(kullaniciGirisDto.Sifre,KullaniciDenetim.Data.PasswordHash,KullaniciDenetim.Data.PasswordSalt))
             {
-                return new DataResult<Kullanici>(new Kullanici { }, false, "Şifre Hatali ");
+                return new ErrorDataResult<Kullanici>("Şifre Hatali ");
             }
-            return new DataResult<Kullanici>(new Kullanici { }, false, "Giris Basarili ");
+            return new SuccesDataResult<Kullanici>(KullaniciDenetim.Data, "Giris Basarili ");
         }
 
         public IDataResult<Kullanici> Kaydol(KaydolDto kaydolDto, string sifre)
@@ -59,16 +60,16 @@ namespace Business.Concrete
 
             };
             _kullaniciService.Add(kullanici);
-            return new DataResult<Kullanici>(new Kullanici { }, false, "Kayit Basarili ");
+            return new SuccesDataResult<Kullanici>(kullanici, "Kayit Basarili ");
         }
 
         public IResult KullaniciKontrol(string kullaniciAdi)
         {
-            if (_kullaniciService.GetByUserName(kullaniciAdi) != null)
+            if (_kullaniciService.GetByUserName(kullaniciAdi).Data != null)
             {
-                return new DataResult<Kullanici>(new Kullanici { }, false, "Giris Kullanici Mevcut ");
+                return new ErrorResult(  "Kullanici Mevcut ");
             }
-            return new DataResult<Kullanici>(new Kullanici { }, false, "Giris Basarili ");
+            return new SuccesDataResult<Kullanici>( "Giris Basarili ");
         }
     }
 }

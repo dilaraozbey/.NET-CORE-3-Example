@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Core.Utilities.Result;
 using DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
@@ -16,42 +17,49 @@ namespace Business.Concrete
             _kullaniciDal = kullaniciDal;
 
         }
-        public IKullaniciDal Add(Kullanici kullanici)
+      
+        IDataResult<Kullanici> IKullaniciService.GetById(int Id)
+        {
+            return new SuccesDataResult<Kullanici>(_kullaniciDal.Get(filter: p => p.Id == Id));
+        }
+
+       List<Rol> IKullaniciService.GetRols(Kullanici kullanici)
+        {
+       
+            return  _kullaniciDal.GetRols(kullanici);
+        }
+
+        IResult IKullaniciService.Add(Kullanici kullanici)
         {
             _kullaniciDal.Add(kullanici);
-            return _kullaniciDal;
+            return new SuccessResult("Eklendi");
         }
 
-        public IKullaniciDal Delete(Kullanici kullanici)
+        IResult IKullaniciService.Delete(Kullanici kullanici)
         {
             _kullaniciDal.Delete(kullanici);
-            return _kullaniciDal;
+            return new SuccessResult("Silindi");
         }
-       
 
-        public IKullaniciDal Update(Kullanici kullanici)
+        IResult IKullaniciService.Update(Kullanici kullanici)
         {
             _kullaniciDal.Update(kullanici);
-            return _kullaniciDal;
-        }
-        public Kullanici GetById(int Id)
-        {
-            return _kullaniciDal.Get(filter: p => p.Id == Id);
+            return new SuccessResult("Güncellendi");
         }
 
-        public List<Rol> GetRols(Kullanici kullanici)
+        IDataResult<Kullanici> IKullaniciService.GetByUserName(string username)
         {
-            return _kullaniciDal.GetRols(kullanici);
+            var kullanici = _kullaniciDal.Get(p => p.KullaniciAdi == username);
+            if (kullanici != null)
+            {
+                return new SuccesDataResult<Kullanici>(_kullaniciDal.Get(p => p.KullaniciAdi == username));
+            }
+            return new ErrorDataResult<Kullanici>(null,"Kullanici Mevcut Değil");
         }
 
-        public Kullanici GetByUserName(string username)
+        IDataResult<List<Kullanici>> IKullaniciService.GetList()
         {
-            return _kullaniciDal.Get(p => p.KullaniciAdi == username);
-        }
-
-        public List<Kullanici> GetList()
-        {
-            return (List<Kullanici>)_kullaniciDal.GetList();
+            return new SuccesDataResult<List<Kullanici>>(_kullaniciDal.GetList().ToList());
         }
     }
 }

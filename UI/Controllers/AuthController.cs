@@ -37,6 +37,7 @@ namespace UI.Controllers
         [HttpPost("Kaydol")]
         public ActionResult Kaydol(KaydolDto kaydolDto)
         {
+            
             var kullaniciKontrol = _authservice.KullaniciKontrol(kaydolDto.KullaniciAdi);
             if (!kullaniciKontrol.Success)
             {

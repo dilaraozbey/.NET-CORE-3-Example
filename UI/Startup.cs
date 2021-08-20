@@ -47,6 +47,14 @@ namespace UI
                 };
             });
 
+            //----
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin", builder =>
+                 builder.AllowAnyOrigin().
+                 AllowAnyMethod().
+                 AllowAnyHeader());
+            });
 
 
         }
@@ -64,7 +72,8 @@ namespace UI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseCors(builder => builder.WithOrigins("https://localhost:44347").AllowAnyHeader());
+            //app.UseCors(builder => builder.WithOrigins("https://localhost:44347").AllowAnyHeader());
+            app.UseCors("AllowOrigin");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -78,7 +87,7 @@ namespace UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Login}/{id?}");
+                    pattern: "{controller=home}/{action=Login}/{id?}");
             });
         }
     }
