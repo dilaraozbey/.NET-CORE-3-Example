@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Business.Entities.Concrete
+namespace Business.Concrete
 {
     public class AuthManager : IAuthService
     {
@@ -52,8 +52,8 @@ namespace Business.Entities.Concrete
                 Ad = kaydolDto.Ad,
                 Soyad = kaydolDto.Soyad,
                 KullaniciAdi = kaydolDto.KullaniciAdi,
-                PasswordHash = passwordHash.ToString(),
-                PasswordSalt = passwordSalt.ToString(),
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
                 Durum=true
 
 

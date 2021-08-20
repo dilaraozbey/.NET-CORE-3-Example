@@ -14,21 +14,25 @@ namespace Business.Concrete
         public KullaniciManager(IKullaniciDal kullaniciDal)
         {
             _kullaniciDal = kullaniciDal;
+
         }
-        public void Add(Kullanici kullanici)
+        public IKullaniciDal Add(Kullanici kullanici)
         {
             _kullaniciDal.Add(kullanici);
+            return _kullaniciDal;
         }
 
-        public void Delete(Kullanici kullanici)
+        public IKullaniciDal Delete(Kullanici kullanici)
         {
             _kullaniciDal.Delete(kullanici);
+            return _kullaniciDal;
         }
        
 
-        public void Update(Kullanici kullanici)
+        public IKullaniciDal Update(Kullanici kullanici)
         {
             _kullaniciDal.Update(kullanici);
+            return _kullaniciDal;
         }
         public Kullanici GetById(int Id)
         {
@@ -42,7 +46,12 @@ namespace Business.Concrete
 
         public Kullanici GetByUserName(string username)
         {
-            return _kullaniciDal.Get(filter: p => p.KullaniciAdi == username);
+            return _kullaniciDal.Get(p => p.KullaniciAdi == username);
+        }
+
+        public List<Kullanici> GetList()
+        {
+            return (List<Kullanici>)_kullaniciDal.GetList();
         }
     }
 }

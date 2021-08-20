@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace UI.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class AuthController : Controller
     {
         private IAuthService _authservice;
@@ -32,6 +34,7 @@ namespace UI.Controllers
             }
             return BadRequest(result.Message);
         }
+        [HttpPost("Kaydol")]
         public ActionResult Kaydol(KaydolDto kaydolDto)
         {
             var kullaniciKontrol = _authservice.KullaniciKontrol(kaydolDto.KullaniciAdi);

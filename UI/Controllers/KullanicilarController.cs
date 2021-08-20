@@ -24,51 +24,51 @@ namespace UI.Controllers
         public IActionResult GetList()
         {
             var Result = _kullaniciService.GetList();
-            if (Result.Success)
+            if (Result != null)
             {
-                return Ok(Result.Data);
+                return Ok(Result);
             }
-            return BadRequest(Result.Message);
+            return BadRequest("hata");
         }
         [HttpGet(template: "Getbyid")]
         public IActionResult GetById(int id)
         {
             var Result = _kullaniciService.GetById(id);
-            if (Result.Success)
+            if (Result!=null)
             {
-                return Ok(Result.Data);
+                return Ok(Result);
             }
-            return BadRequest(Result.Message);
+            return BadRequest("hata");
         }
         [HttpPost(template: "add")]
         public IActionResult Add(Kullanici kullanici)
         {
             var Result = _kullaniciService.Add(kullanici);
-            if (Result.Success)
+            if (Result != null)
             {
-                return Ok(Result.Message);
+                return Ok(Result);
             }
-            return BadRequest(Result.Message);
+            return BadRequest("hata");
         }
         [HttpPost(template: "delete")]
         public IActionResult Delete(Kullanici kullanici)
         {
             var Result = _kullaniciService.Delete(kullanici);
-            if (Result.Success)
+            if (Result != null)
             {
-                return Ok(Result.Message);
+                return Ok(Result);
             }
-            return BadRequest(Result.Message);
+            return BadRequest("hata");
         }
         [HttpPost(template: "update")]
         public IActionResult Update(Kullanici kullanici)
         {
             var Result = _kullaniciService.Update(kullanici);
-            if (Result.Success)
+            if (Result != null)
             {
-                return Ok(Result.Message);
+                return Ok(Result);
             }
-            return BadRequest(Result.Message);
+            return BadRequest("hata");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         {
             optionsBuilder.UseSqlServer(connectionString: @"Server=(localdb)\MSSQLLocalDB;Database=Uygulama;Persist Security Info=true");
         }
-        public DbSet<Kullanici> Kullanicilar { get; set; }
+        public DbSet<Kullanici> Kullanici { get; set; }
         public DbSet<Kullanici_Rol> KullaniciRoller { get; set; }
         public DbSet<Rol> Roller { get; set; }
 

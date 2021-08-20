@@ -1,12 +1,9 @@
 ﻿using Autofac;
 using Business.Abstract;
 using Business.Concrete;
+using Core.Utilities.Security.jwt;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Business.DependencyResolvers.Autofac
 {
     public class AutofacBusinessModule:Module   
@@ -18,6 +15,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<KullaniciManager>().As<IKullaniciService>();
             // eğer birisi IKullaniciDal cağrırırsa ona EfKullaniciDal de temin edilir
             builder.RegisterType<EfKullaniciDal>().As<IKullaniciDal>();
+
+            builder.RegisterType<AuthManager>().As<IAuthService>();
+            builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
         }
     }

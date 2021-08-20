@@ -11,8 +11,8 @@ namespace Core.Entities.Concrete
         public string Ad { get; set; }
         public string Soyad { get; set; }
         public string KullaniciAdi { get; set; }
-        public string PasswordHash { get; set; }
-        public string PasswordSalt { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
         public bool Durum { get; set; }
     }
 }
